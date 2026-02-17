@@ -5,24 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Abokichi Store</title>
     <style>
-        body { margin:0; font-family: Arial, sans-serif; }
-        .footer { width: 100%; font-family: Arial, sans-serif; }
-        .footer-top {
-            background: #8e130a;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 25px 60px;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        .newsletter-left { display: flex; align-items: center; gap: 15px; }
-        .newsletter-left h4 { font-size: 14px; }
-        .newsletter-left p { font-size: 12px; opacity: 0.8; }
-        .newsletter-right { display: flex; }
-        .newsletter-right input { padding: 10px; width: 260px; border: none; outline: none; }
-        .newsletter-right button { padding: 10px 25px; background: #000; color: #fff; border: none; cursor: pointer; }
+        body { font-family: Arial, sans-serif; }
         .intro { display: grid; grid-template-columns: 2fr 1fr; }
         .intro-img { display: grid; grid-template-columns: 1fr 1fr; }
+        .intro-img img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: block;
+        }
         .intro-text { display: flex; flex-direction: column; justify-content: center; padding: 20px; }
         .intro-text h1 span { color: rgb(122, 38, 24); }
         .intro-text button {
@@ -33,17 +29,34 @@
             color: aliceblue;
             font-size: 15px;
             border-radius: 20px;
+            border: none;
         }
         .quote {
             background-color: rgb(31, 45, 31);
             color: aliceblue;
             justify-content: space-between;
-            padding: 10px;
+            padding: 10px 40px;
             display: flex;
         }
-        .two-section { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 60px 40px; }
-        .two-section img { width: 300px; height: 300px; margin-left: 200px; border-radius: 6px; }
+        .two-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 60px 40px;
+        }
+        .two-section div {
+            display: flex;
+            flex-direction: column;
+        }
+        .two-section img {
+            width: 100%;       
+            height: 300px;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+        }
         .two-section h3 { text-align: center; margin-top: 10px; }
+
         .best-sellers { padding: 40px; background: #fafafa; }
         .best-sellers h2 { text-align: center; margin-bottom: 30px; }
         .products { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
@@ -55,14 +68,9 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             cursor: pointer;
         }
-        .product img {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-        }
+        .product img { width: 100%; height: 200px; object-fit: contain; }
         .price { font-weight: bold; margin-top: 8px; }
         .video {
-            position: relative;
             background: url('https://www.allrecipes.com/thmb/ITzMWta04gWy7ri2zIWFYfMvr54=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AR-76296-Meat-Pie-DDMFS-4x3-beauty-f987781548f14bfcb0cb282f598e4e60.jpg') center/cover;
             height: 350px;
             margin: 40px;
@@ -73,6 +81,74 @@
             font-size: 32px;
             font-weight: bold;
         }
+        .footer-img {
+            width: 100%;
+            overflow: hidden;
+        }
+        .footer-img img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+        .footer { width: 100%; }
+        .footer-top {
+            background: #8e130a;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 60px;
+            width: 100%;          
+        }
+        .newsletter-left { display: flex; align-items: center; gap: 15px; }
+        .newsletter-left h4 { font-size: 14px; margin: 0; }
+        .newsletter-left p { font-size: 12px; opacity: 0.8; margin: 4px 0 0; }
+        .newsletter-right { display: flex; }
+        .newsletter-right input {
+            padding: 10px;
+            width: 260px;
+            border: none;
+            outline: none;
+        }
+        .newsletter-right button {
+            padding: 10px 25px;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        @media (max-width: 900px) {
+            .products { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .intro { grid-template-columns: 1fr; }
+            .intro-img { grid-template-columns: 1fr 1fr; }
+            .intro-img img { height: 300px; }
+            .two-section { grid-template-columns: 1fr; padding: 30px 20px; }
+            .footer-top {
+                flex-direction: column;
+                gap: 20px;
+                padding: 25px 20px;
+                text-align: center;
+            }
+            .newsletter-right {
+                width: 100%;
+                justify-content: center;
+            }
+            .newsletter-right input { width: 200px; }
+            .quote { flex-wrap: wrap; gap: 8px; justify-content: center; padding: 10px 20px; }
+            .video { margin: 20px; font-size: 20px; height: 250px; }
+        }
+
+        @media (max-width: 480px) {
+            .intro-img { grid-template-columns: 1fr; }
+            .products { grid-template-columns: 1fr; }
+            .newsletter-right { flex-direction: column; width: 100%; }
+            .newsletter-right input { width: 100%; }
+            .newsletter-right button { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -80,8 +156,8 @@
 
     <div class="intro">
         <div class="intro-img">
-            <img src="img/img1.jpeg" height="500" width="500" alt="Product 1">
-            <img src="img/img2.jpeg" height="500" width="500" alt="Product 2">
+            <img src="img/img1.jpeg" alt="Product 1">
+            <img src="img/img2.jpeg" alt="Product 2">
         </div>
         <div class="intro-text">
             <h1>Nourish Yourself with <span>MISO Goodness</span></h1>
@@ -140,8 +216,8 @@
 
     <div class="video">A Cup a Day for a Probiotic Boost ▶</div>
 
-    <div>
-        <img src="img/fooimg.jpeg" height="300" width="1500" alt="Footer image">
+    <div class="footer-img">
+        <img src="img/fooimg.jpeg" alt="Footer image">
     </div>
 
     <footer class="footer">
