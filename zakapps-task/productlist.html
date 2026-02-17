@@ -125,7 +125,7 @@
 
 <div class="products-container">
   <div class="products-grid" id="productsGrid">
-    <!-- products inserted by JS -->
+    
   </div>
 </div>
 
@@ -133,7 +133,7 @@
 
 <script src="common.js"></script>
 <script>
-// Dummy data
+
 const productsData = [
   { id:1, name:"OREO",          price:"₹35",   rating:5, type:"single", img:"img/i1.jpeg" },
   { id:2, name:"AMUL BUTTER",   price:"₹245",  rating:4, type:"single", img:"img/i2.jpeg" },
@@ -199,13 +199,9 @@ function sortProducts(value) {
   }
   renderProducts(list);
 }
-
-// Events
 document.querySelectorAll(".rating-cb, .type-cb").forEach(cb => {
   cb.addEventListener("change", applyFilters);
 });
-
-// Initial render
 renderProducts(productsData);
 
 </script>
