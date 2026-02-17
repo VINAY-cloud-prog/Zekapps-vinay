@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Detail</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; }
+    .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 50px; }
+    .gallery img.main { width: 100%; max-height: 480px; object-fit: contain; border: 1px solid #eee; }
+    .thumbs { display: flex; gap: 12px; margin-top: 16px; }
+    .thumbs img { width: 80px; height: 80px; object-fit: cover; border: 2px solid transparent; cursor: pointer; }
+    .thumbs img.active { border-color: #e74c3c; }
+    .info h1 { margin: 0 0 12px; }
+    .price { font-size: 1.8rem; font-weight: bold; color: #c0392b; }
+    .old-price { color: #777; text-decoration: line-through; margin-left: 12px; font-size: 1.2rem; }
+    .actions { margin: 24px 0; display: flex; gap: 16px; flex-wrap: wrap; }
+    button {
+      padding: 14px 32px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+    }
+    .add-cart { background: #ecf0f1; color: #2c3e50; border: 1px solid #bdc3c7; }
+    .buy-now  { background: #27ae60; color: white; }
+    .cart-info { margin-top: 30px; font-size: 1.1rem; color: #555; }
+  </style>
+</head>
+<body>
+
+<div id="header"></div>
+
+<div class="container">
+  <div class="gallery">
+    <img class="main" id="mainImg" src="" alt="">
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+
+  <div class="info">
+    <h1 id="title"></h1>
+    <div>
+      <span class="price" id="price"></span>
+      <span class="old-price" id="oldPrice"></span>
+    </div>
+    <div class="stars" id="stars"></div>
+
+    <div class="actions">
+      <button class="add-cart" onclick="addToCart(event)">Add to Cart</button>
+      <button class="buy-now" onclick="buyNow()">Buy Now</button>
+    </div>
+
+    <div class="cart-info">
+      <p id="desc"></p>
+    </div>
+  </div>
+</div>
+
+<div id="footer"></div>
+
+<script src="common.js"></script>
+<script>
+const products = [
+  { id:1, name:"OREO",          price:"₹35",  old:"₹45",  stars:"★★★★★ (23)", desc:"Classic cream-filled chocolate sandwich cookies.", imgs:["img/i1.jpeg","img/i2.jpeg","img/i3.jpeg"] },
+  { id:2, name:"AMUL BUTTER",   price:"₹245", old:"₹280", stars:"★★★★☆ (45)", desc:"Pure & fresh table butter – made from the best milk.", imgs:["img/i2.jpeg","img/i1.jpeg","img/i4.jpeg"] },
+  { id:3, name:"LAY'S",         price:"₹20",  old:"₹25",  stars:"★★★★☆ (68)", desc:"India's favorite masala flavoured potato chips.", imgs:["img/i3.jpeg","img/i4.jpeg","img/i1.jpeg"] },
+  { id:4, name:"MAGGI",         price:"₹14",  old:"₹18",  stars:"★★★★★ (120)",desc:"2-minute noodles with signature masala tastemaker.", imgs:["img/i4.jpeg","img/i3.jpeg","img/i2.jpeg"] },
+];
+
+const urlParams = new URLSearchParams(location.search);
+const id = Number(urlParams.get("id")) || 1;
+const p = products.find(x => x.id === id) || products[0];
+
+document.getElementById("title").textContent     = p.name;
+document.getElementById("price").textContent     = p.price;
+document.getElementById("oldPrice").textContent  = p.old;
+document.getElementById("stars").textContent     = p.stars;
+document.getElementById("desc").textContent      = p.desc;
+document.getElementById("mainImg").src           = p.imgs[0];
+
+const thumbsContainer = document.getElementById("thumbs");
+p.imgs.forEach((src, i) => {
+  const img = document.createElement("img");
+  img.src = src;
+  if (i===0) img.className = "active";
+  img.onclick = () => {
+    document.getElementById("mainImg").src = src;
+    document.querySelectorAll(".thumbs img").forEach(el => el.classList.remove("active"));
+    img.classList.add("active");
+  };
+  thumbsContainer.appendChild(img);
+});
+
+function getCartCount() {
+  return parseInt(sessionStorage.getItem("cartCount") || "0");
+}
+
+function updateCartBadge() {
+  const count = getCartCount();
+  document.querySelectorAll("#cartCount").forEach(el => el.textContent = count);
+}
+
+function addToCart(e) {
+  if (e) e.stopPropagation();
+  let count = getCartCount() + 1;
+  sessionStorage.setItem("cartCount", count);
+  updateCartBadge();
+}
+
+function buyNow() {
+  sessionStorage.removeItem("cartCount");
+  updateCartBadge();
+  location.href = "orderplaced.html";
+}
+
+document.addEventListener("DOMContentLoaded", updateCartBadge);
+</script>
+</body>
+</html>
